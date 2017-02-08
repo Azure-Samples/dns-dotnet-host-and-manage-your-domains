@@ -6,18 +6,18 @@ author: anuchandy
 
 #Getting Started with Dns - Manage Dns - in .Net #
 
-      Azure DNS sample for managing DNS zones.
-       - Create a root DNS zone (contoso.com)
-       - Create a web application
-       - Add a CNAME record (www) to root DNS zone and bind it to web application host name
-       - Creates a virtual machine with public IP
-       - Add a A record (employees) to root DNS zone that points to virtual machine public IPV4 address
-       - Creates a child DNS zone (partners.contoso.com)
-       - Creates a virtual machine with public IP
-       - Add a A record (partners) to child DNS zone that points to virtual machine public IPV4 address
-       - Delegate from root domain to child domain by adding NS records
-       - Remove A record from the root DNS zone
-       - Delete the child DNS zone
+          Azure DNS sample for managing DNS zones.
+           - Create a root DNS zone (contoso.com)
+           - Create a web application
+           - Add a CNAME record (www) to root DNS zone and bind it to web application host name
+           - Creates a virtual machine with public IP
+           - Add a A record (employees) to root DNS zone that points to virtual machine public IPV4 address
+           - Creates a child DNS zone (partners.contoso.com)
+           - Creates a virtual machine with public IP
+           - Add a A record (partners) to child DNS zone that points to virtual machine public IPV4 address
+           - Delegate from root domain to child domain by adding NS records
+           - Remove A record from the root DNS zone
+           - Delete the child DNS zone
 
 
 ## Running this Sample ##
