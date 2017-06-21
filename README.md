@@ -4,7 +4,7 @@ platforms: .Net
 author: anuchandy
 ---
 
-#Getting Started with Dns - Manage Dns - in .Net #
+# Getting Started with Dns - Manage Dns - in .Net #
 
           Azure DNS sample for managing DNS zones.
            - Create a root DNS zone (contoso.com)
