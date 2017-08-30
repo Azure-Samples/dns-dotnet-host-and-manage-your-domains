@@ -1,0 +1,2 @@
+C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\bin\Debug\netstandard1.6\ManageDns.deps.json
+C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\obj\Debug\netstandard1.6\ManageDns.csproj.CoreCompileInputs.cache
