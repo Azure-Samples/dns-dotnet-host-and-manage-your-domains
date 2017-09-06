@@ -1,4 +1,0 @@
-C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\bin\Debug\net452\ManageDns.runtimeconfig.json
-C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\bin\Debug\net452\ManageDns.runtimeconfig.dev.json
-C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\obj\Debug\net452\ManageDns.csproj.ManageDns.exe.config
-C:\Sources\dotnet-samples\dns-dotnet-host-and-manage-your-domains\obj\Debug\net452\ManageDns.csproj.CoreCompileInputs.cache
