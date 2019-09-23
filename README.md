@@ -7,6 +7,7 @@ products:
 extensions:
 - services: Dns
 - platforms: dotnet
+description: "Azure DNS sample for managing DNS zones."
 ---
 
 # Getting started on hosting and managing your domains in C# #
