@@ -5,8 +5,8 @@ languages:
 products:
 - azure
 extensions:
-- services: Dns
-- platforms: dotnet
+  services: Dns
+  platforms: dotnet
 ---
 
 # Getting started on hosting and managing your domains in C# #
