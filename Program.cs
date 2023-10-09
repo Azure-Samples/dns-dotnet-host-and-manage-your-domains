@@ -59,9 +59,7 @@ namespace ManageDns
             string txtRecordName = "asuid.www";
             var partnerSubDomainName = "partners." + dnsZoneName;
 
-            //rgName = ("DnsTemplateRG7711");
-
-
+            try
             {
                 // Get default subscription
                 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
@@ -73,15 +71,7 @@ namespace ManageDns
                 _resourceGroupId = resourceGroup.Id;
                 Utilities.Log("Created a resource group with name: " + resourceGroup.Data.Name);
 
-                {
-                    //var app1 = await rgLro.Value.GetWebSites().GetAsync("SampleWebApp5062");
-                    //var domainList = await app1.Value.GetSiteHostNameBindings().GetAllAsync().ToEnumerableAsync();
-                    //;
-                    //;
-                    ;
-                }
-
-                //============================================================
+                //============================================================, 
                 // Creates root DNS Zone
 
                 Utilities.Log("Creating root DNS zone...");
@@ -273,9 +263,6 @@ namespace ManageDns
                 // Creates a child DNS zone
 
                 Utilities.Log("Creating child DNS zone " + partnerSubDomainName + "...");
-                //var partnersDnsZone = azure.DnsZones
-                //        .Define(partnerSubDomainName)
-                //        .WithExistingResourceGroup(resourceGroup)
 
                 DnsZoneData childZoneInput = new DnsZoneData("Global") { };
                 var childZoneLro = await resourceGroup.GetDnsZones().CreateOrUpdateAsync(WaitUntil.Completed, partnerSubDomainName, childZoneInput);
@@ -355,7 +342,7 @@ namespace ManageDns
                 await childZone.DeleteAsync(WaitUntil.Completed);
                 Utilities.Log("Deleted child DNS zone " + childZone.Data.Name);
             }
-            //finally
+            finally
             {
                 try
                 {
@@ -375,6 +362,7 @@ namespace ManageDns
 
         public static async Task Main(string[] args)
         {
+            try
             {
                 //=================================================================
                 // Authenticate
@@ -387,10 +375,10 @@ namespace ManageDns
 
                 await RunSample(client);
             }
-            //catch (Exception e)
-            //{
-            //    Utilities.Log(e);
-            //}
+            catch (Exception e)
+            {
+                Utilities.Log(e);
+            }
         }
     }
 }
