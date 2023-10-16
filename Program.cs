@@ -56,7 +56,8 @@ namespace ManageDns
 
             string domainName = dnsZoneName;
             string cnameRecordName = "www";
-            string txtRecordName = "asuid.www";
+            string txtRecordName1 = "asuid.www";
+            string txtRecordName2 = "asuid";
             var partnerSubDomainName = "partners." + dnsZoneName;
 
             try
@@ -123,16 +124,19 @@ namespace ManageDns
                 // Step 1: Adds CName DNS record to root DNS zone that specify web app host domain as an
                 // alias for www.[customDomainName]
 
+                // Create one CName record
                 Utilities.Log("Updating DNS zone by adding a CName record...");
 
+                // Create a CName record
                 var cnameInput = new DnsCnameRecordData()
                 {
                     TtlInSeconds = 3600,
                     Cname = app.Data.DefaultHostName
                 };
                 var cnameRecord = await dnsZone.GetDnsCnameRecords().CreateOrUpdateAsync(WaitUntil.Completed, cnameRecordName, cnameInput);
-                Utilities.Log("DNS zone updated");
+                Utilities.Log($"Created CName record: {cnameRecord.Value.Data.Name}");
 
+                // Create two TXT record
                 var txtRecordInput = new DnsTxtRecordData()
                 {
                     TtlInSeconds = 3600,
@@ -144,11 +148,11 @@ namespace ManageDns
                         }
                     }
                 };
-                var txtRecord = await dnsZone.GetDnsTxtRecords().CreateOrUpdateAsync(WaitUntil.Completed, txtRecordName, txtRecordInput);
+                var txtRecord1 = await dnsZone.GetDnsTxtRecords().CreateOrUpdateAsync(WaitUntil.Completed, txtRecordName1, txtRecordInput);
+                Utilities.Log($"Created TXT record: {txtRecord1.Value.Data.Name}");
 
-                // Waiting for a minute for DNS CName entry to propagate
-                Utilities.Log("Waiting a minute for CName record entry to propagate...");
-                Thread.Sleep(60 * 1000);
+                var txtRecord2 = await dnsZone.GetDnsTxtRecords().CreateOrUpdateAsync(WaitUntil.Completed, txtRecordName2, txtRecordInput);
+                Utilities.Log($"Created TXT record: {txtRecord2.Value.Data.Name}");
 
                 // Step 2: Adds a web app host name binding for www.[customDomainName]
                 //         This binding action will fail if the CName record propagation is not yet completed
@@ -187,19 +191,19 @@ namespace ManageDns
                 await appServiceDomain.UpdateAsync(updateDomainInput);
                 Utilities.Log($"App service domain has bound DNS zone");
 
+                // Waiting for a minute for DNS CName entry to propagate
+                Utilities.Log("Waiting two minute for records entry to propagate...");
+                Thread.Sleep(120 * 1000);
+
                 Utilities.Log("Updating Web app with host name binding...");
-                string hostName = $"www.{app.Data.Name}";
                 HostNameBindingData bindInput = new HostNameBindingData()
                 {
                     CustomHostNameDnsRecordType = CustomHostNameDnsRecordType.A,
-                    HostNameType = AppServiceHostNameType.Managed,
-                    SiteName = app.Data.Name,
-                    SslState = HostNameBindingSslState.IPBasedEnabled,
-                    DomainId = appServiceDomain.Id,
-                    //Thumbprint = BinaryData.FromString(Environment.GetEnvironmentVariable("thumbprint")),
+                    HostNameType = AppServiceHostNameType.Verified,
+                    SiteName = appName,
                 };
-                // Need thumbprint
-                //await app.GetSiteHostNameBindings().CreateOrUpdateAsync(WaitUntil.Completed, hostName, bindInput);
+                await app.AnalyzeCustomHostnameAsync(domainName);
+                await app.GetSiteHostNameBindings().CreateOrUpdateAsync(WaitUntil.Completed, domainName, bindInput);
                 Utilities.Log("Web app updated");
 
                 //============================================================
